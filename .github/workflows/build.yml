@@ -1,19 +1,23 @@
-name: Build infernoFSPatcher for Intel
+name: Build infernoFSPatcher for Catalina 10.15
 on: [push]
 jobs:
   build:
-    runs-on: macos-15-intel  # أو macos-26-intel
+    runs-on: macos-13-intel
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: brew install cmake
-      - name: Configure and Build for Intel
+      - name: Configure and Build for Catalina
         run: |
           cd infernofspatcher
-          cmake -S . -B build -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B build \
+            -DCMAKE_OSX_ARCHITECTURES="x86_64" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 \
+            -DCMAKE_CXX_STANDARD=17
           cmake --build build
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: inferno_fs_patcher_intel
+          name: inferno_fs_patcher_catalina
           path: infernofspatcher/build/inferno_fs_patcher
