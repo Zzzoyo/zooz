@@ -2,7 +2,7 @@ name: Build infernoFSPatcher for Intel
 on: [push]
 jobs:
   build:
-    runs-on: macos-13  # بيئة Intel
+    runs-on: macos-13 
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
