@@ -1,19 +1,19 @@
-name: Build infernoFSPatcher
+name: Build infernoFSPatcher for Apple Silicon
 on: [push]
 jobs:
   build:
-    runs-on:     macos-14
+    runs-on: macos-latest  # بيئة ARM
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: brew install cmake
-      - name: Configure and Build
+      - name: Configure and Build for ARM64
         run: |
           cd infernofspatcher
-          cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B build -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_BUILD_TYPE=Release
           cmake --build build
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: inferno_fs_patcher
+          name: inferno_fs_patcher_arm64
           path: infernofspatcher/build/inferno_fs_patcher
